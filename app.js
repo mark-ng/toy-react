@@ -3,34 +3,35 @@ import ImgDemo from "./components/ImgDemo.js";
 import InputDemo from "./components/InputDemo.js";
 
 // TAKEAWAY: component states is actually global
-const data = {};
+const data = [];
+let counter;
 
-export function useState(label, value) {
-  createState(label, value);
+export function useState(value) {
+  counter++;
 
-  return [data[label], updateData(label)];
-}
-
-function createState(label, value) {
-  // "if" statement is to avoid reset state when component function
-  // is rerun everytime data change
-  if (!data[label]) {
-    data[label] = value;
+  if (!data[counter]) {
+    data[counter] = value;
   }
-}
 
-function updateData(label) {
-  return function (value) {
+  // Use closure to prevent using the global counter in updateState function
+  let componentCounter = counter;
+
+  const updateState = (value) => {
     if (typeof value === "function") {
-      data[label] = value(data[label]);
+      data[componentCounter] = value(data[componentCounter]);
     } else {
-      data[label] = value;
+      data[componentCounter] = value;
     }
     updateDOM();
   };
+
+  return [data[counter], updateState];
 }
 
 function createVDOM() {
+  // Reset the global counter, when traversing the virtualDOM, each component 
+  // will be assigned unique id (counter)
+  counter = 0;
   return {
     ele: "div",
     childs: [InputDemo(), CounterDemo(), ImgDemo()],

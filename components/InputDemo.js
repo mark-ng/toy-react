@@ -1,7 +1,7 @@
 import {useState} from "../app.js";
 
 export default function InputDemo() {
-  const [name, setName] = useState("name", "");
+  const [name, setName] = useState("");
 
   function handle(e) {
     setName(e.target.value);
