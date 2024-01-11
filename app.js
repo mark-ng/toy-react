@@ -1,60 +1,11 @@
+import CounterDemo from "./components/CounterDemo.js";
 import ImgDemo from "./components/ImgDemo.js";
-
-// states
-let name = "";
-let count = 0;
-
-// update state functions
-function handle(e) {
-  name = e.target.value;
-}
-
-function increment() {
-  count += 1;
-}
+import InputDemo from "./components/InputDemo.js";
 
 function createVDOM() {
   return {
     ele: "div",
-    value: undefined,
-    textContent: undefined,
-    childs: [
-      {
-        ele: "input",
-        value: name,
-        textContent: undefined,
-        oninput: handle,
-        childs: [],
-      },
-      {
-        ele: "div",
-        value: undefined,
-        textContent: `Hello , ${name}`,
-        oninput: undefined,
-        childs: [],
-      },
-      {
-        ele: "div",
-        value: undefined,
-        textContent: `Should never update`,
-        oninput: undefined,
-        childs: [],
-      },
-      {
-        ele: "button",
-        value: undefined,
-        textContent: "+",
-        onclick: increment,
-        childs: [],
-      },
-      {
-        ele: "div",
-        value: undefined,
-        textContent: `Count: ${count}`,
-        childs: [],
-      },
-      ImgDemo(),
-    ],
+    childs: [InputDemo(), CounterDemo(), ImgDemo()],
   };
 }
 
@@ -119,4 +70,4 @@ function convert(node) {
   return ele;
 }
 
-setInterval(updateDOM, 1000);
+setInterval(updateDOM, 15);
