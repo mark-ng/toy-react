@@ -1,3 +1,5 @@
+import ImgDemo from "./components/ImgDemo.js";
+
 // states
 let name = "";
 let count = 0;
@@ -51,6 +53,7 @@ function createVDOM() {
         textContent: `Count: ${count}`,
         childs: [],
       },
+      ImgDemo(),
     ],
   };
 }
