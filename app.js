@@ -3,9 +3,15 @@ import ImgDemo from "./components/ImgDemo.js";
 import InputDemo from "./components/InputDemo.js";
 
 // TAKEAWAY: component states is actually global
-export const data = {};
+const data = {};
 
-export function createState(label, value) {
+export function useState(label, value) {
+  createState(label, value);
+
+  return [data[label], updateData(label)];
+}
+
+function createState(label, value) {
   // "if" statement is to avoid reset state when component function
   // is rerun everytime data change
   if (!data[label]) {
@@ -13,13 +19,15 @@ export function createState(label, value) {
   }
 }
 
-export function updateData(label, value) {
-  if (typeof value === "function") {
-    data[label] = value(data[label]);
-  } else {
-    data[label] = value;
-  }
-  updateDOM();
+function updateData(label) {
+  return function (value) {
+    if (typeof value === "function") {
+      data[label] = value(data[label]);
+    } else {
+      data[label] = value;
+    }
+    updateDOM();
+  };
 }
 
 function createVDOM() {
