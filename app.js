@@ -1,17 +1,23 @@
 // Single source of truth
 let name = "";
+let count = 0;
 
 function createVDOM() {
   return [
     ["input", name, handle],
     ["div", `Hello, ${name}`],
     ["div", "Great job!"],
-    ["button", "Hello world", null, ],
+    ["button", "+", null, increment],
+    ["div", `Count: ${count}`],
   ];
 }
 
 function handle(e) {
   name = e.target.value;
+}
+
+function increment() {
+  count += 1;
 }
 
 // Framework
@@ -50,6 +56,7 @@ function convert(node) {
   ele.textContent = node[1];
   ele.value = node[1];
   ele.oninput = node[2];
+  ele.onclick = node[3];
   return ele;
 }
 
