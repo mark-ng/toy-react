@@ -1,10 +1,12 @@
-let name = "";
-
-function handle(e) {
-  name = e.target.value;
-}
+import {createState, data, updateData} from "../app.js";
 
 export default function InputDemo() {
+  createState("name", "");
+
+  function handle(e) {
+    updateData("name", e.target.value);
+  }
+
   return {
     ele: "div",
     childs: [
@@ -16,7 +18,7 @@ export default function InputDemo() {
       },
       {
         ele: "div",
-        textContent: `Hello , ${name}`,
+        textContent: `Hello , ${data.name}`,
         childs: [],
       },
       {

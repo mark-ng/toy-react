@@ -1,10 +1,12 @@
-let count = 0;
-
-function increment() {
-  count += 1;
-}
+import {createState, data, updateData} from "../app.js";
 
 export default function CounterDemo() {
+  createState("count", 0);
+
+  function increment() {
+    updateData("count", (count) => count + 1);
+  }
+
   return {
     ele: "div",
     childs: [
@@ -17,7 +19,7 @@ export default function CounterDemo() {
       {
         ele: "div",
         value: undefined,
-        textContent: `Count: ${count}`,
+        textContent: `Count: ${data["count"]}`,
         childs: [],
       },
     ],
