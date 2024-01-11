@@ -1,10 +1,12 @@
-import {useState} from "../app.js";
+import {useState} from "../react.js";
 
 export default function CounterDemo() {
   const [count, setCount] = useState(0);
+  const [x, setX] = useState(1);
 
   function increment() {
     setCount((count) => count + 1);
+    setX((x) => x + 1);
   }
 
   return {
@@ -18,8 +20,17 @@ export default function CounterDemo() {
       },
       {
         ele: "div",
-        value: undefined,
         textContent: `Count: ${count}`,
+        childs: [],
+      },
+      {
+        ele: "div",
+        textContent: `Double: ${count * 2}`,
+        childs: [],
+      },
+      {
+        ele: "div",
+        textContent: `x: ${x}`,
         childs: [],
       },
     ],

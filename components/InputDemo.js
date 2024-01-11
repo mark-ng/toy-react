@@ -1,4 +1,4 @@
-import {useState} from "../app.js";
+import {useState} from "../react.js";
 
 export default function InputDemo() {
   const [name, setName] = useState("");
