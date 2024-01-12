@@ -1,6 +1,6 @@
 import {useState} from "../react.js";
 
-export default function CounterDemo() {
+export default function CounterDemo(isVisible) {
   const [count, setCount] = useState(0);
   const [x, setX] = useState(1);
 
@@ -11,6 +11,7 @@ export default function CounterDemo() {
 
   return {
     ele: "div",
+    style: `${!isVisible && "display:None;"}`,
     childs: [
       {
         ele: "button",

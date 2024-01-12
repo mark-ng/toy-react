@@ -1,6 +1,6 @@
 import {useState} from "../react.js";
 
-export default function ToggleDemo() {
+export default function ToggleDemo(isVisible) {
   const [mounted, setMounted] = useState(true);
 
   function toggle() {
@@ -9,27 +9,20 @@ export default function ToggleDemo() {
 
   return {
     ele: "div",
-    childs: mounted
-      ? [
-          {
-            ele: "button",
-            onclick: toggle,
-            textContent: "Hide Greeting",
-            childs: [],
-          },
-          {
-            ele: "div",
-            textContent: "Hi 👋",
-            childs: [],
-          },
-        ]
-      : [
-          {
-            ele: "button",
-            onclick: toggle,
-            textContent: "Show Greeting",
-            childs: [],
-          },
-        ],
+    style: `${!isVisible && "display:None"}`,
+    childs: [
+      {
+        ele: "button",
+        onclick: toggle,
+        textContent: "Hide Greeting",
+        childs: [],
+      },
+      {
+        ele: "div",
+        style: `${!mounted && "display:None;"}`,
+        textContent: "Hi 👋",
+        childs: [],
+      },
+    ],
   };
 }

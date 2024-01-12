@@ -1,5 +1,5 @@
 // TAKEAWAY: component states is actually global
-const data = [];
+export const data = [];
 let globalId = 0;
 
 export function useState(value) {
@@ -34,27 +34,6 @@ let elems;
 function findDiff(prev, curr, elems) {
   const {childs: prevChilds, ...prevProperties} = prev;
   const {childs: currChilds, ...currProperties} = curr;
-
-  const isChildsDifferent = hasDifferentElements(
-    prevChilds.map((e) => e.ele),
-    currChilds.map((e) => e.ele)
-  );
-
-  if (isChildsDifferent) {
-    // Update own properties with curVDOM
-    for (let key of Object.keys(currProperties)) {
-      elems[key] = currProperties[key];
-    }
-    // Remove all the childs from actual DOM
-    while (elems.firstChild) {
-      elems.removeChild(elems.lastChild);
-    }
-    // Reconstruct all childs and append to current element
-    for (let child of currChilds) {
-      elems.appendChild(dfsConvert(child));
-    }
-    return;
-  }
 
   if (JSON.stringify(prevProperties) !== JSON.stringify(currProperties)) {
     /* ASSUMPTION ALERT: the component properties from the virtualDOM 
@@ -104,20 +83,4 @@ function convert(node) {
     ele[key] = nodeProperties[key];
   }
   return ele;
-}
-
-// Helper Functions
-
-function hasDifferentElements(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return true;
-  }
-
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
-      return true; // Found a different element at index i
-    }
-  }
-
-  return false;
 }

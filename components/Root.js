@@ -1,10 +1,15 @@
-import {useState} from "../react.js";
+import {data, useState} from "../react.js";
 import CounterDemo from "./CounterDemo.js";
 import ImgDemo from "./ImgDemo.js";
 import InputDemo from "./InputDemo.js";
 import ToggleDemo from "./ToggleDemo.js";
 
-const pages = [InputDemo, ImgDemo, ToggleDemo, CounterDemo];
+const pages = [
+  {name: "Form Demo", component: InputDemo},
+  {name: "Image Demo", component: ImgDemo},
+  {name: "Toggle Demo", component: ToggleDemo},
+  {name: "Counter Demo", component: CounterDemo},
+];
 
 export default function Root() {
   const [page, setPage] = useState(0);
@@ -14,34 +19,23 @@ export default function Root() {
     childs: [
       {
         ele: "div",
-        childs: [
-          {
-            ele: "button",
-            textContent: "First",
-            onclick: () => setPage(0),
-            childs: [],
-          },
-          {
-            ele: "button",
-            textContent: "Second",
-            onclick: () => setPage(1),
-            childs: [],
-          },
-          {
-            ele: "button",
-            textContent: "Third",
-            onclick: () => setPage(2),
-            childs: [],
-          },
-          {
-            ele: "button",
-            textContent: "Fourth",
-            onclick: () => setPage(3),
-            childs: [],
-          },
-        ],
+        childs: pages.map((p, i) => ({
+          ele: "button",
+          textContent: p.name,
+          onclick: () => setPage(i),
+          childs: [],
+        })),
       },
-      pages[page](),
+      {
+        ele: "div",
+        childs: [...pages.map((p, i) => p.component(page === i))],
+      },
+      {
+        ele: "div",
+        style: "position: absolute; bottom: 0;margin:10px;color:blue;",
+        textContent: `Global State: ${JSON.stringify(data, null, 2)}`,
+        childs: [],
+      },
     ],
   };
 }
