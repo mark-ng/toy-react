@@ -34,6 +34,25 @@ let elems;
 function findDiff(prev, curr, elems) {
   const {childs: prevChilds, ...prevProperties} = prev;
   const {childs: currChilds, ...currProperties} = curr;
+
+  // if childs.length is different between previous virtualDOM
+  // and new virtualDOM, reconstruct
+  if (prevChilds.length !== currChilds.length) {
+    // update the properties of current element
+    for (let key of Object.keys(currProperties)) {
+      elems[key] = currProperties[key];
+    }
+    // Remove all existing childs
+    while (elems.firstChild) {
+      elems.removeChild(elems.lastChild);
+    }
+    // Reconstruct all childs and append to current element
+    for (let child of currChilds) {
+      elems.appendChild(dfsConvert(child));
+    }
+    return;
+  }
+
   if (JSON.stringify(prevProperties) !== JSON.stringify(currProperties)) {
     /* ASSUMPTION ALERT: the component properties from the virtualDOM 
       have the same name as the properties from the actualDOM */
