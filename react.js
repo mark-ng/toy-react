@@ -5,7 +5,7 @@ let globalId = 0;
 export function useState(value) {
   globalId++;
 
-  if (!data[globalId]) {
+  if (data[globalId] == undefined) {
     data[globalId] = value;
   }
 
