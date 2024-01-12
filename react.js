@@ -35,14 +35,17 @@ function findDiff(prev, curr, elems) {
   const {childs: prevChilds, ...prevProperties} = prev;
   const {childs: currChilds, ...currProperties} = curr;
 
-  // if childs.length is different between previous virtualDOM
-  // and new virtualDOM, reconstruct
-  if (prevChilds.length !== currChilds.length) {
-    // update the properties of current element
+  const isChildsDifferent = hasDifferentElements(
+    prevChilds.map((e) => e.ele),
+    currChilds.map((e) => e.ele)
+  );
+
+  if (isChildsDifferent) {
+    // Update own properties with curVDOM
     for (let key of Object.keys(currProperties)) {
       elems[key] = currProperties[key];
     }
-    // Remove all existing childs
+    // Remove all the childs from actual DOM
     while (elems.firstChild) {
       elems.removeChild(elems.lastChild);
     }
@@ -101,4 +104,20 @@ function convert(node) {
     ele[key] = nodeProperties[key];
   }
   return ele;
+}
+
+// Helper Functions
+
+function hasDifferentElements(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return true;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return true; // Found a different element at index i
+    }
+  }
+
+  return false;
 }
